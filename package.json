@@ -9,12 +9,15 @@
     "prod": "webpack --mode production --config webpack.build.config.js && electron --noDevServer .",
     "start": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js --mode development",
     "build": "webpack --config webpack.build.config.js --mode production",
-    "package": "npm run build && electron-packager ."
+    "package": "npm run build && electron-packager .",
+    "debug": "npm run build && electron ."
   },
   "dependencies": {
     "electron": "^1.8.6",
+    "material-ui": "^0.20.1",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "read-last-lines": "^1.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

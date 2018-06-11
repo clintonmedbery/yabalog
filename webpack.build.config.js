@@ -40,9 +40,12 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        new webpack.ExternalsPlugin('commonjs', [
+            'electron'
+        ])
     ],
-    devtool: 'cheap-source-map',
+    devtool: 'eval-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         stats: {

@@ -4,6 +4,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
+const {ipcMain, electron} = require('electron')
+const Prefs = require('./app/Prefs');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,25 +32,19 @@ function createWindow() {
         height: 768,
         show: false
     });
+    mainWindow.webContents.openDevTools();
 
     // and load the index.html of the app.
     let indexPath;
 
     // Implementing Webpack
-    if (dev && process.argv.indexOf('--noDevServer') === -1) {
-        indexPath = url.format({
-            protocol: 'http:',
-            host: 'localhost:8080',
-            pathname: 'index.html',
-            slashes: true
-        })
-    } else {
-        indexPath = url.format({
-            protocol: 'file:',
-            pathname: path.join(__dirname, 'dist', 'index.html'),
-            slashes: true
-        })
-    }
+
+    indexPath = url.format({
+        protocol: 'file:',
+        pathname: path.join(__dirname, 'dist', 'index.html'),
+        slashes: true
+    });
+
 
     mainWindow.loadURL(indexPath);
 
@@ -92,3 +88,18 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+app.commandLine.appendSwitch('remote-debugging-port', '9222');
+
+ipcMain.on('get-prefs', (event, arg) => {
+    const store = new Prefs({
+        configName: 'user-preferences'
+    });
+    let path = store.get('pathToFolder');
+    if(path){
+        event.sender.send('folder-picked', path);
+    }
+});
+
+require('./app/OpenDialogue')(mainWindow, ipcMain);
+require('./app/GrabLogs')(mainWindow, ipcMain);
