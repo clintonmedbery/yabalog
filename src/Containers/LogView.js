@@ -1,4 +1,5 @@
 import React from 'react';
+import {Card, RaisedButton} from "material-ui";
 let ipcRenderer = require('electron').ipcRenderer;
 
 export default class LogGrabber extends React.Component {
@@ -15,16 +16,25 @@ export default class LogGrabber extends React.Component {
 
     }
 
+    wipeLog(path){
+        ipcRenderer.send('wipe-log', path);
+    }
+
     mapLogs() {
         return this.state.logs.map(log => {
-            return (
-                <div>
-                    <h2>{log.title}</h2>
-                    {log.lines.map(line =>{
-                        return(<div>{line}</div>);
-                    })}
-                </div>
-            );
+            if(log.lines.length > 1){
+                return (
+                    <Card style={styles.wrapper}>
+                        <h3>{log.title}</h3>
+                        {log.lines.map(line =>{
+                            return(<div>{line}</div>);
+                        })}
+                        <RaisedButton onClick={() => this.wipeLog(log.title)} style={styles.button}>
+                            Wipe Log
+                        </RaisedButton>
+                    </Card>
+                );
+            }
         })
     }
 
@@ -36,9 +46,15 @@ export default class LogGrabber extends React.Component {
     }
 }
 
-// const styles = {
-//
-// };
+const styles = {
+    button: {
+        margin: '1em'
+    },
+    wrapper: {
+        padding: '1em',
+        margin: '1em'
+    }
+};
 
 
 

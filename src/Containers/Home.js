@@ -14,6 +14,7 @@ export default class Home extends Component {
             <div
                 style={mainContainerStyle}>
                 <Header />
+                <div/>
                 <LogView/>
             </div>
         );
