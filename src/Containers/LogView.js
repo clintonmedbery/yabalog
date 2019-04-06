@@ -27,7 +27,7 @@ export default class LogGrabber extends React.Component {
                     <Card style={styles.wrapper}>
                         <h3>{log.title}</h3>
                         {log.lines.map(line =>{
-                            return(<div>{line}</div>);
+                            return(<div style={styles.line}>{line}</div>);
                         })}
                         <RaisedButton onClick={() => this.wipeLog(log.title)} style={styles.button}>
                             Wipe Log
@@ -53,6 +53,11 @@ const styles = {
     wrapper: {
         padding: '1em',
         margin: '1em'
+    },
+    line: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        wordBreak: "break-all"
     }
 };
 

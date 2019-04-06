@@ -53,6 +53,9 @@ module.exports = {
             chunks: false,
             children: false
         },
+        watchOptions: {
+            ignored: /node_modules/
+        },
         before() {
             spawn(
                 'electron',
