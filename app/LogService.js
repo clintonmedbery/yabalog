@@ -8,10 +8,14 @@ module.exports = (mainWindow, ipcMain) => {
         grabLogs(event, arg);
     });
 
-    ipcMain.on('wipe-log', (event, arg) => {
-        fs.truncate(arg, 0, function(){
+    ipcMain.on('wipe-log', (event, file) => {
+        fs.truncate(file, 0, function(){
             grabLogs(event);
         })
+    });
+
+    ipcMain.on('wipe-all-logs', (event) => {
+        wipeLogs(event)
     });
 };
 
@@ -24,6 +28,7 @@ function grabLogs(event, arg){
     let logs = logGrabber.grabLogs();
 
     var promises = [];
+    console.log("Getting Logs", logs);
     logs.map(log => {
         let newLog = {};
         promises.push(readLastLines.read(log, 30)
@@ -44,4 +49,18 @@ function grabLogs(event, arg){
         // error occurred
         console.log(err);
     });
+}
+
+function wipeLogs(event, arg){
+    console.log("Wiping logs");
+    const store = new Prefs({
+        configName: 'user-preferences'
+    });
+    let path = store.get('pathToFolder');
+    let logGrabber = new LogGrabber(path);
+    let logs = logGrabber.grabLogs();
+    logs.map((log)=> {
+        fs.truncate(log, 0);
+    });
+    grabLogs(event);
 }

@@ -101,4 +101,4 @@ ipcMain.on('get-prefs', (event, arg) => {
 });
 
 require('./app/OpenDialogue')(mainWindow, ipcMain);
-require('./app/GrabLogs')(mainWindow, ipcMain);
+require('./app/LogService')(mainWindow, ipcMain);

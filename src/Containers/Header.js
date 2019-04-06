@@ -32,6 +32,10 @@ export default class Header extends React.Component {
         ipcRenderer.send('grab-logs');
     }
 
+    handleWipeAllLogs() {
+        ipcRenderer.send('wipe-all-logs');
+    }
+
     autoGrabLogs(){
         if(this.state.pathToFolder && this.state.pathToFolder !== ""){
             ipcRenderer.send('grab-logs');
@@ -60,6 +64,11 @@ export default class Header extends React.Component {
                             <div style={styles.button}>
                                 <RaisedButton onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Grab Logs
+                                </RaisedButton>
+                            </div>
+                            <div style={styles.button}>
+                                <RaisedButton onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                    Wipe Logs
                                 </RaisedButton>
                             </div>
                         </div>
