@@ -1,10 +1,10 @@
 import React from 'react';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-let ipcRenderer = require('electron').ipcRenderer;
+import {Button, TextField, Toolbar} from "@material-ui/core";
+import { ipcRenderer } from 'electron';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -43,33 +43,35 @@ export default class Header extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
             <div style={styles.wrapper}>
-                <Toolbar style={styles.toolbar}>
+                <Toolbar className={classes.toolbar}>
                     <div>
                         <TextField
-                            inputStyle={styles.inputStyle}
-                            hintText="Folder Path"
-                            underlineStyle={styles.underlineStyle}
-                            underlineFocusStyle={styles.underlineStyle}
-                            hintStyle={styles.hintStyle}
+                            className={classes.inputStyle}
+                            placeholder="Folder Path"
+                            // underlineStyle={classes.underlineStyle}
+                            // underlineFocusStyle={classes.underlineStyle}
+                            // hintStyle={classes.hintStyle}
                             value={this.state.pathToFolder}
                         />
                         <div style={styles.buttonWrapper}>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleBrowse}>
+                                <Button onClick={this.handleBrowse}>
                                     Browse
-                                </RaisedButton>
+                                </Button>
                             </div>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Grab Logs
-                                </RaisedButton>
+                                </Button>
                             </div>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Wipe Logs
-                                </RaisedButton>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -82,6 +84,12 @@ export default class Header extends React.Component {
 }
 
 const styles = {
+    wrapper:{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        paddingBottom: '4em'
+    },
     buttonWrapper: {
         float: 'right',
         flex: 1,
@@ -90,13 +98,11 @@ const styles = {
     },
     button: {
         paddingLeft: '1em'
-    },
-    wrapper:{
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        paddingBottom: '4em'
-    },
+    }
+
+};
+
+const classes = {
     toolbar: {
         backgroundColor: '#4285f4',
         width: '100%',
@@ -116,3 +122,9 @@ const styles = {
         width: '30em'
     }
 };
+Header.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(classes)(Header);
+
