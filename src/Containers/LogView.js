@@ -71,9 +71,9 @@ export default class LogView extends React.Component {
                 <div key={uuid()}>{logs}</div>
                 <Modal open={!!this.state.fullLogTitle}>
                     <div style={styles.modal}>
-                        <Card key={uuid()} style={styles.wrapper}>
+                        <Card key={uuid()} style={styles.fullLogCard}>
                             <h3>{this.state.fullLogTitle}</h3>
-                            <div style={styles.modal}>
+                            <div style={styles.fullLogs}>
                                 {this.state.fullLogLines.map(line =>{
                                     return(<div key={uuid()} style={styles.line}>{line}</div>);
                                 })}
@@ -97,6 +97,12 @@ const styles = {
         padding: '1em',
         margin: '1em'
     },
+    fullLogCard: {
+        overflowY: "scroll",
+        height: "80%",
+        padding: '1em',
+        margin: '1em'
+    },
     line: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -106,12 +112,12 @@ const styles = {
         width: "100%"
     },
     modal: {
-        height: "85%",
+        height: "100%",
         overflowY: "scroll",
         outline: 'none'
     },
     fullLogs: {
-        height: "85%",
+        height: "80%",
         overflowY: "scroll"
     }
 };
