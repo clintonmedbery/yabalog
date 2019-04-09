@@ -19,7 +19,9 @@ const theme = createMuiTheme({
         },
         text: {
             button: "#BABABA",
-            inputText: "#C7C7C7"
+            inputText: "#C7C7C7",
+            text: "#C7C7C7"
+
         }
     },
     typography: {
