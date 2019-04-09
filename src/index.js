@@ -6,21 +6,21 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import './styles/App.css'
 import Home from "./Containers/Home";
 import createMuiTheme from "@material-ui/core/es/styles/createMuiTheme";
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            light: purple[300],
-            main: purple[500],
-            dark: purple[700],
+            light: "#3C3F41",
+            main: "#313335",
+            dark: "#2B2B2B"
         },
         secondary: {
-            light: green[300],
-            main: green[500],
-            dark: green[700],
+            main: "#A9B7C6"
         },
+        text: {
+            button: "#BABABA",
+            inputText: "#C7C7C7"
+        }
     },
     typography: {
         useNextVariants: true,

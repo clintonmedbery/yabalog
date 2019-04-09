@@ -11,10 +11,8 @@ export default class Home extends Component {
             alignItems: 'center'
         };
         return (
-            <div
-                style={mainContainerStyle}>
+            <div style={mainContainerStyle}>
                 <Header />
-                <div/>
                 <LogView/>
             </div>
         );

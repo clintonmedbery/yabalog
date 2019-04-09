@@ -46,30 +46,36 @@ class Header extends React.Component {
         const { classes } = this.props;
 
         return (
+
             <div style={styles.wrapper}>
                 <Toolbar className={classes.toolbar}>
                     <div>
                         <TextField
                             className={classes.inputStyle}
+                            id="outlined-name"
+                            margin="normal"
                             placeholder="Folder Path"
-                            // underlineStyle={classes.underlineStyle}
-                            // underlineFocusStyle={classes.underlineStyle}
-                            // hintStyle={classes.hintStyle}
+                            variant="outlined"
+                            InputProps={{
+                                classes: {
+                                    input: classes.inputStyle
+                                }
+                            }}
                             value={this.state.pathToFolder}
                         />
                         <div style={styles.buttonWrapper}>
                             <div style={styles.button}>
-                                <Button onClick={this.handleBrowse}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleBrowse}>
                                     Browse
                                 </Button>
                             </div>
                             <div style={styles.button}>
-                                <Button onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Grab Logs
                                 </Button>
                             </div>
                             <div style={styles.button}>
-                                <Button onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Wipe Logs
                                 </Button>
                             </div>
@@ -85,29 +91,28 @@ class Header extends React.Component {
 
 const styles = {
     wrapper:{
-        display: 'flex',
         flexDirection: 'row',
         width: '100%',
-        paddingBottom: '4em'
+        paddingBottom: '1em'
     },
     buttonWrapper: {
         float: 'right',
         flex: 1,
-        padding: '.5em',
+        paddingRight: "2em",
+        paddingTop: ".6em",
+        paddingBottom: "1em",
         display: 'inline-flex'
     },
     button: {
         paddingLeft: '1em'
     }
-
 };
 
-const classes = {
+const classes = theme => ({
     toolbar: {
-        backgroundColor: '#4285f4',
+        backgroundColor: '#3C3F41',
         width: '100%',
-        display: 'inline',
-        flex: 2
+        height: '20%'
     },
     underlineStyle: {
         borderColor: 'white',
@@ -118,10 +123,18 @@ const classes = {
         color: 'white'
     },
     inputStyle: {
-        color: 'white',
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.text.inputText,
         width: '30em'
+    },
+    button: {
+        backgroundColor: theme.palette.primary.dark,
+        color: theme.palette.text.button,
+        marginBottom: ".5em",
+        marginTop: "1em"
     }
-};
+});
+
 Header.propTypes = {
     classes: PropTypes.object.isRequired,
 };
