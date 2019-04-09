@@ -1,10 +1,10 @@
 import React from 'react';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-let ipcRenderer = require('electron').ipcRenderer;
+import {Button, TextField, Toolbar} from "@material-ui/core";
+import { ipcRenderer } from 'electron';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -43,33 +43,41 @@ export default class Header extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
+
             <div style={styles.wrapper}>
-                <Toolbar style={styles.toolbar}>
+                <Toolbar className={classes.toolbar}>
                     <div>
                         <TextField
-                            inputStyle={styles.inputStyle}
-                            hintText="Folder Path"
-                            underlineStyle={styles.underlineStyle}
-                            underlineFocusStyle={styles.underlineStyle}
-                            hintStyle={styles.hintStyle}
+                            className={classes.inputStyle}
+                            id="outlined-name"
+                            margin="normal"
+                            placeholder="Folder Path"
+                            variant="outlined"
+                            InputProps={{
+                                classes: {
+                                    input: classes.inputStyle
+                                }
+                            }}
                             value={this.state.pathToFolder}
                         />
                         <div style={styles.buttonWrapper}>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleBrowse}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleBrowse}>
                                     Browse
-                                </RaisedButton>
+                                </Button>
                             </div>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleLogStart} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Grab Logs
-                                </RaisedButton>
+                                </Button>
                             </div>
                             <div style={styles.button}>
-                                <RaisedButton onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
+                                <Button variant="contained" className={classes.button} onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Wipe Logs
-                                </RaisedButton>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -82,26 +90,29 @@ export default class Header extends React.Component {
 }
 
 const styles = {
+    wrapper:{
+        flexDirection: 'row',
+        width: '100%',
+        paddingBottom: '1em'
+    },
     buttonWrapper: {
         float: 'right',
         flex: 1,
-        padding: '.5em',
+        paddingRight: "2em",
+        paddingTop: ".6em",
+        paddingBottom: "1em",
         display: 'inline-flex'
     },
     button: {
         paddingLeft: '1em'
-    },
-    wrapper:{
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        paddingBottom: '4em'
-    },
+    }
+};
+
+const classes = theme => ({
     toolbar: {
-        backgroundColor: '#4285f4',
+        backgroundColor: '#3C3F41',
         width: '100%',
-        display: 'inline',
-        flex: 2
+        height: '20%'
     },
     underlineStyle: {
         borderColor: 'white',
@@ -112,7 +123,21 @@ const styles = {
         color: 'white'
     },
     inputStyle: {
-        color: 'white',
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.text.inputText,
         width: '30em'
+    },
+    button: {
+        backgroundColor: theme.palette.primary.dark,
+        color: theme.palette.text.button,
+        marginBottom: ".5em",
+        marginTop: "1em"
     }
+});
+
+Header.propTypes = {
+    classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(classes)(Header);
+

@@ -8,13 +8,12 @@ export default class Home extends Component {
             height: window.innerHeight,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            backgroundColor: "#313335"
         };
         return (
-            <div
-                style={mainContainerStyle}>
+            <div style={mainContainerStyle}>
                 <Header />
-                <div/>
                 <LogView/>
             </div>
         );

@@ -15,8 +15,13 @@ module.exports = (mainWindow, ipcMain) => {
     });
 
     ipcMain.on('wipe-all-logs', (event) => {
-        wipeLogs(event)
+        wipeLogs(event);
     });
+
+    ipcMain.on('grab-full-log', (event, file) => {
+        grabFullLog(event, file);
+    });
+
 };
 
 function grabLogs(event, arg){
@@ -31,7 +36,7 @@ function grabLogs(event, arg){
     console.log("Getting Logs", logs);
     logs.map(log => {
         let newLog = {};
-        promises.push(readLastLines.read(log, 30)
+        promises.push(readLastLines.read(log, 35)
             .then((lines) => {
                 lines = lines.split("\n");
                 newLog.lines = lines;
@@ -51,7 +56,7 @@ function grabLogs(event, arg){
     });
 }
 
-function wipeLogs(event, arg){
+wipeLogs = (event) => {
     console.log("Wiping logs");
     const store = new Prefs({
         configName: 'user-preferences'
@@ -63,4 +68,16 @@ function wipeLogs(event, arg){
         fs.truncate(log, 0);
     });
     grabLogs(event);
-}
+};
+
+grabFullLog = (event, file) => {
+    console.log("Get file", file);
+    fs.readFile(file, 'utf8', function read(err, lines) {
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        lines = lines.split("\n");
+        event.sender.send('full-log-grabbed', {title: file, lines});
+    });
+};
