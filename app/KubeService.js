@@ -18,8 +18,12 @@ const grabNamespaces = (event) => {
         let outputArray = output.split("\n");
         outputArray = outputArray.map((outputToFormat) => {
             let newOutput = outputToFormat.split(" ");
-            return { nameSpace: newOutput[0], name: newOutput[1]};
+            if(newOutput[0] && newOutput[1]){
+                return { nameSpace: newOutput[0], name: newOutput[1]};
+            }
         });
+        //Remove empty item
+        outputArray.pop();
         event.sender.send('namespaces-grabbed', { nameSpaces: outputArray });
     });
 };

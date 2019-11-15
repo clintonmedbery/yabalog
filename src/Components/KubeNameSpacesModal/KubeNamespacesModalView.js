@@ -3,8 +3,9 @@ import {Button, Card} from "@material-ui/core";
 import React from "react";
 import uuid from "uuid/v4";
 import {get as _get} from 'lodash';
+import {InputField} from "../InputField/InputField";
 
-const KubeNameSpacesModalView = ({ styles, nameSpaces, closeModal, classes, isLoading, chosenNameSpace, grabKubeLogs, chosenPod, choosePod }) => {
+const KubeNameSpacesModalView = ({ styles, nameSpaces, closeModal, classes, isLoading, filterPods, grabKubeLogs, chosenPod, choosePod, filterTerm, showModal }) => {
     let title = isLoading ? "Loading..." : "Click a NameSpace to Grab Logs";
     let nameSpaceCardClass = isLoading ? classes.nameSpaceCardLoading : classes.nameSpaceCard;
 
@@ -16,10 +17,13 @@ const KubeNameSpacesModalView = ({ styles, nameSpaces, closeModal, classes, isLo
 
     return (
         <div style={styles.cards}>
-            <Modal open={formattedNameSpaces.length > 0 || isLoading}>
+            <Modal open={showModal}>
                 <div style={styles.modal}>
                     <Card key={uuid()} className={nameSpaceCardClass}>
                         <h3>{title}</h3>
+                        {!isLoading &&
+                            <InputField onChange={filterPods} value={filterTerm} className={classes.inputStyle}/>
+                        }
                         <div style={styles.fullNameSpaces}>
                             {formattedNameSpaces}
                         </div>
@@ -27,7 +31,7 @@ const KubeNameSpacesModalView = ({ styles, nameSpaces, closeModal, classes, isLo
                             Grab Kube Logs
                         </Button>
                         <Button onClick={closeModal} className={classes.button} disabled={isLoading}>
-                            Close Log
+                            Close NameSpace Search
                         </Button>
                     </Card>
                 </div>
@@ -37,3 +41,4 @@ const KubeNameSpacesModalView = ({ styles, nameSpaces, closeModal, classes, isLo
 };
 
 export default KubeNameSpacesModalView;
+

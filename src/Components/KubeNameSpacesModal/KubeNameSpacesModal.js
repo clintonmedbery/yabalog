@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import KubeNameSpacesModalView from "./KubeNamespacesModalView";
 import {withStyles} from "@material-ui/core";
 let ipcRenderer = require('electron').ipcRenderer;
@@ -66,6 +66,11 @@ const classes = theme => ({
         color: theme.palette.text.button,
         marginBottom: ".5em",
         marginTop: "1em"
+    },
+    inputStyle: {
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.text.inputText,
+        width: '30em'
     }
 });
 
@@ -74,7 +79,8 @@ const KubeNameSpacesModal = (props) => {
     let [nameSpaces, setNameSpaces] = useState([]);
     let [isLoading, setIsLoading] = useState(false);
     let [chosenPod, setChosenPod] = useState(null);
-
+    let [filterTerm, setFilterTerm] = useState("");
+    let [filteredNameSpaces, setFilteredNameSpaces] = useState([])
 
     useEffect(() => {
         ipcRenderer.on('namespaces-loading-true', (event, data) => {
@@ -83,9 +89,18 @@ const KubeNameSpacesModal = (props) => {
 
         ipcRenderer.on('namespaces-grabbed', (event, data) => {
             setNameSpaces(data.nameSpaces);
+            setFilteredNameSpaces(data.nameSpaces);
             setIsLoading(false);
         });
     }, []);
+
+    useEffect(() => {
+        let newPods = nameSpaces.filter((pod) => {
+            return pod.name.includes(filterTerm) || pod.nameSpace.includes(filterTerm);
+        });
+        setFilteredNameSpaces(newPods);
+
+    },[filterTerm]);
 
     let closeModal = () => {
         setNameSpaces([]);
@@ -96,17 +111,24 @@ const KubeNameSpacesModal = (props) => {
     };
 
     let choosePod= (pod) => {
-        console.log(pod);
         setChosenPod(pod)
     };
 
+    let filterPods = (event) => {
+        setFilterTerm(event.target.value)
+    };
+
+    let showModal = nameSpaces.length > 0 || isLoading;
     return (
         <KubeNameSpacesModalView
             isLoading={isLoading}
-            nameSpaces={nameSpaces}
+            nameSpaces={filteredNameSpaces}
             styles={styles}
             classes={classes}
             chosenPod={chosenPod}
+            filterTerm={filterTerm}
+            showModal={showModal}
+            filterPods={filterPods}
             grabKubeLogs={grabKubeLogs}
             choosePod={choosePod}
             closeModal={closeModal}
