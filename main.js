@@ -2,10 +2,10 @@
 
 // Import parts of electron to use
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
 const url = require('url');
 const {ipcMain, electron} = require('electron')
 const Prefs = require('./app/Prefs');
+const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,7 +30,10 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
-        show: false
+        show: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     // and load the index.html of the app.
@@ -102,3 +105,4 @@ ipcMain.on('get-prefs', (event, arg) => {
 
 require('./app/OpenDialogue')(mainWindow, ipcMain);
 require('./app/LogService')(mainWindow, ipcMain);
+require('./app/KubeService')(mainWindow, ipcMain);

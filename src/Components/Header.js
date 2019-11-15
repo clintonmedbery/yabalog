@@ -36,6 +36,10 @@ class Header extends React.Component {
         ipcRenderer.send('wipe-all-logs');
     }
 
+    getNameSpaces() {
+        ipcRenderer.send('grab-namespaces');
+    }
+
     autoGrabLogs(){
         if(this.state.pathToFolder && this.state.pathToFolder !== ""){
             ipcRenderer.send('grab-logs');
@@ -77,6 +81,11 @@ class Header extends React.Component {
                             <div style={styles.button}>
                                 <Button variant="contained" className={classes.button} onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Wipe Logs
+                                </Button>
+                            </div>
+                            <div style={styles.button}>
+                                <Button variant="contained" className={classes.button} onClick={this.getNameSpaces}>
+                                    Kube
                                 </Button>
                             </div>
                         </div>
