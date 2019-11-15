@@ -19,9 +19,9 @@ class Header extends React.Component {
 
         this.autoGrabLogs.bind(this);
         var self = this;
-        setTimeout(function() {
-            self.autoGrabLogs();
-        }, 30000);
+        // setTimeout(function() {
+        //     self.autoGrabLogs();
+        // }, 30000);
     }
 
     handleBrowse() {
