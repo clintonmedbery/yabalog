@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import LogView from './LogView';
+import LogView from './LogView/LogView';
+import KubeNameSpacesModal from "./KubeNameSpacesModal/KubeNameSpacesModal";
 
 export default class Home extends Component {
     render() {
@@ -14,6 +15,7 @@ export default class Home extends Component {
         return (
             <div style={mainContainerStyle}>
                 <Header />
+                <KubeNameSpacesModal/>
                 <LogView/>
             </div>
         );

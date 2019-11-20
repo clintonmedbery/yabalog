@@ -19,9 +19,9 @@ class Header extends React.Component {
 
         this.autoGrabLogs.bind(this);
         var self = this;
-        setTimeout(function() {
-            self.autoGrabLogs();
-        }, 30000);
+        // setTimeout(function() {
+        //     self.autoGrabLogs();
+        // }, 30000);
     }
 
     handleBrowse() {
@@ -34,6 +34,10 @@ class Header extends React.Component {
 
     handleWipeAllLogs() {
         ipcRenderer.send('wipe-all-logs');
+    }
+
+    getNameSpaces() {
+        ipcRenderer.send('grab-namespaces');
     }
 
     autoGrabLogs(){
@@ -77,6 +81,11 @@ class Header extends React.Component {
                             <div style={styles.button}>
                                 <Button variant="contained" className={classes.button} onClick={this.handleWipeAllLogs} disabled={!this.state.pathToFolder || this.state.pathToFolder === ""}>
                                     Wipe Logs
+                                </Button>
+                            </div>
+                            <div style={styles.button}>
+                                <Button variant="contained" className={classes.button} onClick={this.getNameSpaces}>
+                                    Kube
                                 </Button>
                             </div>
                         </div>

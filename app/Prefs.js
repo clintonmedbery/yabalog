@@ -5,10 +5,12 @@ const fs = require('fs');
 class Prefs {
     constructor(opts) {
 
+        console.log(opts);
         const userDataPath = (electron.app || electron.remote.app).getPath('userData');
         this.path = path.join(userDataPath, opts.configName + '.json');
 
         this.data = parseDataFile(this.path);
+        console.log(this.data);
     }
 
     get(key) {

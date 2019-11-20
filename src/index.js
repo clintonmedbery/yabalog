@@ -4,7 +4,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 // Import some styles
 import './styles/App.css'
-import Home from "./Containers/Home";
+import Home from "./Components/Home";
 import createMuiTheme from "@material-ui/core/es/styles/createMuiTheme";
 
 const theme = createMuiTheme({
