@@ -11,12 +11,10 @@
     "build": "webpack --config webpack.build.config.js --mode production",
     "package": "npm run build && electron-packager .",
     "debug": "npm run build && electron ."
-
   },
   "dependencies": {
     "@material-ui/core": "3.9.3",
-    "electron": "2.0.18",
-    "react": "^16.3.2",
+    "electron": "^2.0.18",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "read-last-lines": "1.7.1"
