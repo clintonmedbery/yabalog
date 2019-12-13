@@ -33,6 +33,7 @@ class LogGrabber {
                 }
             }, this
         );
+        console.log(result);
         return result;
     }
 }

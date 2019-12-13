@@ -65,7 +65,8 @@ wipeLogs = (event) => {
     let logGrabber = new LogGrabber(path);
     let logs = logGrabber.grabLogs();
     logs.map((log)=> {
-        fs.truncate(log, 0);
+        console.log(fs)
+        fs.truncate(log, 0, () => {});
     });
     grabLogs(event);
 };
