@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@material-ui/core": "3.9.3",
-    "electron": "^2.0.18",
+    "electron": "^11.5.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "read-last-lines": "1.7.1"
